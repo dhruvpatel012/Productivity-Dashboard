@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProductiveMind - Productivity Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="A beautiful and simple student productivity dashboard featuring a Todo list, Daily Planner, Daily Goals tracking, Pomodoro timer, Weather, Quotes, and dynamic themes.">
+  <meta name="author" content="Student Project">
+  
+  <!-- Fonts: Outfit (headings) and Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Icon Libraries CDNs -->
+  <!-- Font Awesome for UI elements (buttons, close, controls) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Remix Icon for feature card dashboard tiles -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mediaQuery.css">
+  
+  <!-- Inline script to prevent theme flashing on load -->
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('prod-dashboard-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+</head>
+<body class="time-morning"> <!-- Default class, script will update this dynamically -->
+  
+  <!-- Ambient Aurora Background -->
+  <div class="aurora-bg">
+    <div class="aurora-blob aurora-blob--1"></div>
+    <div class="aurora-blob aurora-blob--2"></div>
+    <div class="aurora-blob aurora-blob--3"></div>
+  </div>
+
+  <!-- Dynamic Background overlay for smooth transitions -->
+  <div class="bg-overlay"></div>
+
+  <div class="app-container">
+    <!-- Header Area -->
+    <header class="app-header">
+      <div class="header-logo">
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="36" height="36" style="display: block;">
+          <rect x="5" y="17" width="2.5" height="8" rx="0.5" fill="#00d5e3" />
+          <rect x="9" y="13" width="2.5" height="12" rx="0.5" fill="#00d5e3" />
+          <rect x="13" y="9" width="2.5" height="16" rx="0.5" fill="#00d5e3" />
+          <path d="M 14.25 7.5 A 7.5 7.5 0 0 1 18 22 L 13 22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square" />
+        </svg>
+        <h1>ProductiveMind</h1>
+      </div>
+      <div class="header-controls">
+        <!-- Theme Switch Toggle Button -->
+        <button id="theme-toggle-btn" class="control-btn" aria-label="Toggle Dark/Light Mode">
+          <i class="fa-solid fa-moon theme-icon-dark"></i>
+          <i class="fa-solid fa-sun theme-icon-light"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Views Container -->
+    <main class="main-content">
+      
+      <!-- ========================================== -->
+      <!-- 1. DASHBOARD VIEW (HOME SCREEN)            -->
+      <!-- ========================================== -->
+      <section id="dashboard-view" class="view-section">
+        
+        <!-- Welcome Message & Quick Quote Summary -->
+        <div class="welcome-banner">
+          <h2>Welcome back!</h2>
+          <p id="greeting-message">Ready to seize the day?</p>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <div class="bento-grid">
+          
+          <!-- Date & Time Display Widget (Always Visible on Home) -->
+          <div id="datetime-widget" class="bento-card widget-card clock-card">
+            <div class="widget-header">
+              <span class="widget-label">Current Date & Time</span>
+              <i class="ri-time-line widget-icon"></i>
+            </div>
+            <div class="clock-display">
+              <div id="clock-time">00:00:00 AM</div>
+              <div id="clock-date">Loading date...</div>
+            </div>
+          </div>
+
+          <!-- Weather Widget (Always Visible on Home) -->
+          <div id="weather-widget" class="bento-card widget-card weather-card">
+            <div class="widget-header">
+              <span class="widget-label">Local Weather</span>
+              <i class="ri-temp-cloud-line widget-icon"></i>
+            </div>
+            <div id="weather-content" class="weather-content loading">
+              <!-- States: Loading, Error, Data -->
+              <div class="weather-loader">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading weather...
+              </div>
+            </div>
+          </div>
+
+          <!-- Todo List Navigation Card (Clickable) -->
+          <div class="bento-card nav-card todo-card" data-target="todo-view">
+            <div class="card-icon-container">
+              <i class="ri-checkbox-multiple-line card-icon"></i>
+            </div>
+            <div class="card-info">
+              <h3>Todo List</h3>
+              <p id="todo-card-summary">Manage your tasks</p>
+            </div>
+            <div class="card-arrow">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Daily Planner Navigation Card (Clickable) -->
+          <div class="bento-card nav-card planner-card" data-target="planner-view">
+            <div class="card-icon-container">
+              <i class="ri-calendar-todo-line card-icon"></i>
+            </div>
+            <div class="card-info">
+              <h3>Daily Planner</h3>
+              <p id="planner-card-summary">Schedule your hours</p>
+            </div>
+            <div class="card-arrow">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Daily Goals Navigation Card (Clickable) -->
+          <div class="bento-card nav-card goals-card" data-target="goals-view">
+            <div class="card-icon-container">
+              <i class="ri-flag-2-line card-icon"></i>
+            </div>
+            <div class="card-info">
+              <h3>Daily Goals</h3>
+              <div class="goals-summary-wrapper">
+                <p id="goals-card-summary">Track today's targets</p>
+                <div class="goals-progress-mini">
+                  <div id="goals-progress-bar-fill" class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="card-arrow">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Pomodoro Timer Navigation Card (Clickable) -->
+          <div class="bento-card nav-card pomodoro-card" data-target="pomodoro-view">
+            <div class="card-icon-container">
+              <i class="ri-timer-flash-line card-icon"></i>
+            </div>
+            <div class="card-info">
+              <h3>Pomodoro</h3>
+              <p id="pomodoro-card-summary">25:00 focus session</p>
+            </div>
+            <div class="card-arrow">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Motivation Quote Navigation Card (Clickable) -->
+          <div class="bento-card nav-card quote-card" data-target="quote-view">
+            <div class="card-icon-container">
+              <i class="ri-double-quotes-l card-icon"></i>
+            </div>
+            <div class="card-info">
+              <h3>Motivation</h3>
+              <p id="quote-card-summary">Inspirational quotes</p>
+            </div>
+            <div class="card-arrow">
+              <i class="fa-solid fa-arrow-right"></i>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 2. TODO LIST FEATURE VIEW (HIDDEN)         -->
+      <!-- ========================================== -->
+      <section id="todo-view" class="view-section feature-view hidden">
+        <div class="feature-header">
+          <button class="back-btn" data-back-to="dashboard-view">
+            <i class="fa-solid fa-chevron-left"></i> Dashboard
+          </button>
+          <h2><i class="ri-checkbox-multiple-line"></i> Todo List</h2>
+        </div>
+
+        <div class="feature-body">
+          <div class="todo-app">
+            <!-- Add Task Form -->
+            <form id="todo-form" class="todo-form" onsubmit="event.preventDefault();">
+              <input type="text" id="todo-input" placeholder="What needs to be done?" required autocomplete="off">
+              <button type="submit" id="todo-add-btn" class="primary-btn">
+                <i class="fa-solid fa-plus"></i> Add Task
+              </button>
+            </form>
+
+            <!-- Task List Filter / Summary bar -->
+            <div class="todo-filters">
+              <span id="todo-count">0 tasks left</span>
+            </div>
+
+            <!-- Task List -->
+            <ul id="todo-list" class="todo-list">
+              <!-- Dynamically populated by JS -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 3. DAILY PLANNER FEATURE VIEW (HIDDEN)     -->
+      <!-- ========================================== -->
+      <section id="planner-view" class="view-section feature-view hidden">
+        <div class="feature-header">
+          <button class="back-btn" data-back-to="dashboard-view">
+            <i class="fa-solid fa-chevron-left"></i> Dashboard
+          </button>
+          <h2><i class="ri-calendar-todo-line"></i> Daily Planner</h2>
+        </div>
+
+        <div class="feature-body">
+          <div class="planner-app">
+            <p class="section-description">Plan your hours. Changes are saved automatically as you type.</p>
+            
+            <div id="planner-slots" class="planner-slots">
+              <!-- Hourly time slots from 07:00 AM to 10:00 PM will be generated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 4. DAILY GOALS FEATURE VIEW (HIDDEN)       -->
+      <!-- ========================================== -->
+      <section id="goals-view" class="view-section feature-view hidden">
+        <div class="feature-header">
+          <button class="back-btn" data-back-to="dashboard-view">
+            <i class="fa-solid fa-chevron-left"></i> Dashboard
+          </button>
+          <h2><i class="ri-flag-2-line"></i> Daily Goals</h2>
+        </div>
+
+        <div class="feature-body">
+          <div class="goals-app">
+            <div class="goals-header-info">
+              <p class="section-description">Define key achievements for today. Focus on your most critical objectives.</p>
+              
+              <!-- Goals Progress -->
+              <div class="goals-progress-panel">
+                <div class="progress-info">
+                  <span id="goals-progress-text">0 of 0 completed</span>
+                  <span id="goals-progress-percent">0%</span>
+                </div>
+                <div class="goals-progress-bar">
+                  <div id="goals-progress-bar-fill-full" class="progress-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Add Goal Form -->
+            <form id="goals-form" class="todo-form" onsubmit="event.preventDefault();">
+              <input type="text" id="goals-input" placeholder="Add a new daily goal..." required autocomplete="off">
+              <button type="submit" id="goals-add-btn" class="primary-btn">
+                <i class="fa-solid fa-plus"></i> Add Goal
+              </button>
+            </form>
+
+            <!-- Goals List -->
+            <ul id="goals-list" class="todo-list goals-list">
+              <!-- Dynamically populated by JS -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 5. POMODORO TIMER FEATURE VIEW (HIDDEN)    -->
+      <!-- ========================================== -->
+      <section id="pomodoro-view" class="view-section feature-view hidden">
+        <div class="feature-header">
+          <button class="back-btn" data-back-to="dashboard-view">
+            <i class="fa-solid fa-chevron-left"></i> Dashboard
+          </button>
+          <h2><i class="ri-timer-flash-line"></i> Pomodoro Timer</h2>
+        </div>
+
+        <div class="feature-body">
+          <div class="pomodoro-app">
+            <div class="pomodoro-card-main">
+              <div class="session-label" id="pomodoro-session-label">Work Session</div>
+              
+              <div class="timer-display" id="pomodoro-time-display">25:00</div>
+              
+              <div class="pomodoro-controls">
+                <button id="pomodoro-start" class="timer-btn play-btn" aria-label="Start Timer">
+                  <i class="fa-solid fa-play"></i> Start
+                </button>
+                <button id="pomodoro-pause" class="timer-btn pause-btn hidden" aria-label="Pause Timer">
+                  <i class="fa-solid fa-pause"></i> Pause
+                </button>
+                <button id="pomodoro-reset" class="timer-btn reset-btn" aria-label="Reset Timer">
+                  <i class="fa-solid fa-rotate-right"></i> Reset
+                </button>
+              </div>
+
+              <div class="pomodoro-modes">
+                <button class="mode-btn active" data-time="1500" data-label="Work Session">Work (25m)</button>
+                <button class="mode-btn" data-time="300" data-label="Short Break">Short Break (5m)</button>
+                <button class="mode-btn" data-time="900" data-label="Long Break">Long Break (15m)</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 6. MOTIVATION QUOTE FEATURE VIEW (HIDDEN)  -->
+      <!-- ========================================== -->
+      <section id="quote-view" class="view-section feature-view hidden">
+        <div class="feature-header">
+          <button class="back-btn" data-back-to="dashboard-view">
+            <i class="fa-solid fa-chevron-left"></i> Dashboard
+          </button>
+          <h2><i class="ri-double-quotes-l"></i> Motivation Quotes</h2>
+        </div>
+
+        <div class="feature-body">
+          <div class="quote-app">
+            <div class="quote-container-box">
+              <i class="fa-solid fa-quote-left quote-mark-icon-start"></i>
+              <div id="quote-text-container" class="quote-text-container">
+                <p id="quote-text" class="quote-text">Loading inspiration...</p>
+                <cite id="quote-author" class="quote-author">— Loading</cite>
+              </div>
+              <i class="fa-solid fa-quote-right quote-mark-icon-end"></i>
+            </div>
+            
+            <button id="new-quote-btn" class="primary-btn new-quote-btn">
+              <i class="fa-solid fa-arrows-rotate"></i> New Quote
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer Area -->
+    <footer class="app-footer">
+      <p>&copy; 2026 ProductiveMind. Designed for student learning.</p>
+    </footer>
+  </div>
+
+  <!-- Project Modular JavaScript Files (Method 1) -->
+  <script src="js/background.js" defer></script>
+  <script src="js/theme.js" defer></script>
+  <script src="js/datetime.js" defer></script>
+  <script src="js/navigation.js" defer></script>
+  <script src="js/todo.js" defer></script>
+  <script src="js/planner.js" defer></script>
+  <script src="js/goals.js" defer></script>
+  <script src="js/pomodoro.js" defer></script>
+  <script src="js/quotes.js" defer></script>
+  <script src="js/weather.js" defer></script>
+  <script src="js/interactions.js" defer></script>
+</body>
+</html>

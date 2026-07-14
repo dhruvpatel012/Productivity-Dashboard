@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect x="1" y="1" width="30" height="30" rx="6" fill="#1e1e24" />
+  <!-- Rising progress bars in vibrant turquoise -->
+  <rect x="5" y="17" width="2.5" height="8" rx="0.5" fill="#00d5e3" />
+  <rect x="9" y="13" width="2.5" height="12" rx="0.5" fill="#00d5e3" />
+  <rect x="13" y="9" width="2.5" height="16" rx="0.5" fill="#00d5e3" />
+  <!-- The Loop in white -->
+  <path d="M 14.25 7.5 A 7.5 7.5 0 0 1 18 22 L 13 22" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="square" />
+</svg>
