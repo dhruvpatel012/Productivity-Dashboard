@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Daily Goals -------
-// ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
   let goals = [];

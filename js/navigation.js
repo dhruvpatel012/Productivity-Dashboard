@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Dashboard Navigation -------
-// ==========================================
 
 // Global reference so other modules can force navigation if needed
 let navigateToSection;

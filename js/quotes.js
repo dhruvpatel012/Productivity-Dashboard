@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Motivation Quote -------
-// ==========================================
 
 // Global reference so navigation.js can refresh quote upon section change
 let loadQuote;

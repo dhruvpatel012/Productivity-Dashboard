@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Dynamic Background -------
-// ==========================================
 
 // Apply background class based on hour (Declared globally so datetime.js can access it)
 function updateDynamicBackground(hour) {

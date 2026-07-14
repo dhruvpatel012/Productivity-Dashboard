@@ -1,6 +1,4 @@
-/* ========================================== */
 /* ------- Root & CSS Variables ------- */
-/* ========================================== */
 :root {
   /* Fonts */
   --font-heading: 'Outfit', sans-serif;
@@ -86,9 +84,7 @@
   --scrollbar-thumb: rgba(0, 0, 0, 0.12);
 }
 
-/* ========================================== */
 /* ------- Base Layout & Typography ------- */
-/* ========================================== */
 * {
   margin: 0;
   padding: 0;
@@ -143,9 +139,7 @@ button, input, select, textarea {
   background: var(--accent-color);
 }
 
-/* ========================================== */
 /* ------- Dynamic Backgrounds ------- */
-/* ========================================== */
 .bg-overlay {
   position: fixed;
   top: 0;
@@ -309,9 +303,7 @@ body.time-evening {
   }
 }
 
-/* ========================================== */
 /* ------- App Header ------- */
-/* ========================================== */
 .app-header {
   display: flex;
   justify-content: space-between;
@@ -400,9 +392,7 @@ body.time-evening {
   50% { transform: scale(1.08); filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.6)); }
 }
 
-/* ========================================== */
 /* ------- Bento Grid Home Dashboard ------- */
-/* ========================================== */
 .welcome-banner {
   margin: 2rem 0 1.5rem 0;
 }
@@ -616,9 +606,7 @@ body.time-evening {
   color: var(--text-primary);
 }
 
-/* ========================================== */
 /* ------- Widget Elements: Clock & Weather ------- */
-/* ========================================== */
 .widget-header {
   display: flex;
   justify-content: space-between;
@@ -747,9 +735,7 @@ body.time-evening {
   gap: 0.25rem;
 }
 
-/* ========================================== */
 /* ------- Feature Common Views ------- */
-/* ========================================== */
 .view-section {
   transition: opacity var(--transition-normal) ease;
 }
@@ -875,9 +861,7 @@ body.time-evening {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* ========================================== */
 /* ------- Todo List & Daily Goals ------- */
-/* ========================================== */
 .todo-app, .goals-app {
   width: 100%;
 }
@@ -1073,9 +1057,7 @@ body.time-evening {
   flex-direction: column;
 }
 
-/* ========================================== */
 /* ------- Daily Planner ------- */
-/* ========================================== */
 .planner-slots {
   display: flex;
   flex-direction: column;
@@ -1157,9 +1139,7 @@ body.time-evening {
   color: var(--accent-color);
 }
 
-/* ========================================== */
 /* ------- Pomodoro Timer ------- */
-/* ========================================== */
 .pomodoro-app {
   display: flex;
   justify-content: center;
@@ -1293,9 +1273,7 @@ body.time-evening {
   border: 1px solid var(--card-border);
 }
 
-/* ========================================== */
 /* ------- Motivation Quote ------- */
-/* ========================================== */
 .quote-app {
   display: flex;
   flex-direction: column;
@@ -1363,9 +1341,7 @@ body.time-evening {
   pointer-events: none;
 }
 
-/* ========================================== */
 /* ------- App Footer ------- */
-/* ========================================== */
 .app-footer {
   margin-top: auto;
   text-align: center;

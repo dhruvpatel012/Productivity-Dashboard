@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Weather Widget -------
-// ==========================================
 
 // Global reference so that the retry button inside the widget can invoke it
 let loadWeather;

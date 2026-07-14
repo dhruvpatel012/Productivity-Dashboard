@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Theme Switch & Local Storage -------
-// ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
   const themeToggleBtn = document.getElementById('theme-toggle-btn');

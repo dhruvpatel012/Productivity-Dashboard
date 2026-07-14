@@ -1,6 +1,4 @@
-// ==========================================
 // ------- Pomodoro Timer -------
-// ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
   let pomodoroTimeLeft = 1500; // 25 minutes in seconds
